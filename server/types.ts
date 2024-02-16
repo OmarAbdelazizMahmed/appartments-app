@@ -33,10 +33,7 @@ export interface UserRegister {
     password: string;
 }
 
-export type ApartmentCreateRequest = Pick<Apartment, 'title' | 'description' | 'price' | 'location' | 'image' | 'userId'>;
 
-export interface ApartmentCreateResponse {
-}
 
 export interface ApartmentUpdate {
     id: string;

@@ -4,26 +4,26 @@ import { User, Apartment } from "../../types";
 export class InMemoryDataStore implements DataStore{
     private users: User[] = [];
     private apartments: Apartment[] = [];
-    createUser(user: User): User {
+    createUser(user: User): Promise<User> {
         this.users.push(user);
-        return user;
+        return Promise.resolve(user);
     }
-    getUserByEmail(email: string): User | null {
+    getUserByEmail(email: string): Promise<User | null> {
         let user = this.users.find((user) => user.email === email);
-        return user || null;
+        return Promise.resolve(user || null);
     }
-    listApartments(): Apartment[] {
-        return this.apartments;
+    listApartments(): Promise<Apartment[]> {
+        return Promise.resolve(this.apartments);
     }
-    getApartmentById(id: string): Apartment | null {
+    getApartmentById(id: string): Promise<Apartment | null> {
         let apartment = this.apartments.find((apartment) => apartment.id === id);
-        return apartment || null;
+        return Promise.resolve(apartment || null);
     }
-    createApartment(apartment: Apartment): Apartment {
+    createApartment(apartment: Apartment): Promise<Apartment> {
         this.apartments.push(apartment);
-        return apartment;
+        return Promise.resolve(apartment);
     }
-    updateApartment(apartment: Apartment): Apartment {
+    updateApartment(apartment: Apartment): Promise<Apartment> {
         this.apartments = this.apartments.map((a) => {
             if(a.id === apartment.id){
                 return apartment;
@@ -31,13 +31,14 @@ export class InMemoryDataStore implements DataStore{
             return a;
         }
         );
-        return apartment;
+        return Promise.resolve(apartment);
     }
-    deleteApartment(id: string): boolean {
+    deleteApartment(id: string): Promise<boolean> {
         this.apartments = this.apartments.filter((a) => a.id !== id);
-        return true;
+        return Promise.resolve(true);
     }
-    searchApartments(search: string): Apartment[] {
-        return this.apartments.filter((a) => a.title.includes(search));
+    searchApartments(search: string): Promise<Apartment[]> {
+        let apartments = this.apartments.filter((apartment) => apartment.title.toLowerCase().includes(search.toLowerCase()));
+        return Promise.resolve(apartments);
     }
 }

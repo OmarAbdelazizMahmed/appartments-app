@@ -1,41 +1,42 @@
-import express, { RequestHandler } from 'express';
-import { db } from './datastore';
-import { createApartmentHandler, getApartmentHandler, listApartmentsHandler } from './handlers/apartmentHandler';
+import express, { ErrorRequestHandler, RequestHandler } from 'express';
+import { createApartmentHandler, listApartmentsHandler } from './handlers/apartmentHandler';
+import expressAsyncHandler from 'express-async-handler';
+import { initDb } from './datastore';
 
-const app = express();
+(async () => {
 
-app.use(express.json());
+    await initDb();
 
+    const app = express();
 
-const requestLoggerMiddleware: RequestHandler = (req, res, next) => {
-    console.log(`${req.method} ${req.path}`);
-    next();
-}
-
-app.use(requestLoggerMiddleware);
-
-app.get('/apartments',  listApartmentsHandler);
-
-// show a specific apartment
-app.get('/apartments/:id', getApartmentHandler);
-
-// add a new apartment
-app.post('/apartments',  createApartmentHandler);
-// register user
-app.post('/users', (req, res) => {
-    const user = req.body;
-    console.log(user);
-
-    res.send('User registered');
-});
-
-// login user
-
-app.post('/login', (req, res) => {
-    res.send('User logged in');
-});
+    app.use(express.json());
 
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});
+    const requestLoggerMiddleware: RequestHandler = (req, res, next) => {
+        console.log(`${req.method} ${req.path}`);
+        next();
+    }
+
+    app.use(requestLoggerMiddleware);
+
+    app.get('/apartments',  expressAsyncHandler(listApartmentsHandler));
+
+    // show a specific apartment
+    // app.get('/apartments/:id', getApartmentHandler);
+
+    // add a new apartment
+    app.post('/apartments',  expressAsyncHandler(createApartmentHandler));
+
+    app.post('/login', (req, res) => {
+        res.send('User logged in');
+    });
+
+    const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+        console.error(err);
+        res.status(500).send({ message: 'Something went wrong' });
+    }
+
+    app.use(errorHandler);
+
+    app.listen(3000);
+})();

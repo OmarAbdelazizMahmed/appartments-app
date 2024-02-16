@@ -1,25 +1,27 @@
 import { RequestHandler } from "express";
 import { db } from "../datastore";
-import { Apartment, ApartmentCreateRequest, ApartmentCreateResponse, ExpressHandlerRequest } from "../types";
+import { Apartment, ExpressHandlerRequest } from "../types";
 import crypto from 'crypto';
+import { CreateApartmentRequest, CreateApartmentResponse, GetApartmentRequest, GetApartmentResponse, listApartmentsRequest, listApartmentsResponse } from "../api";
 
-export const listApartmentsHandler: ExpressHandlerRequest<{}, {}> = (req, res) => {
-    res.send({ apartments: db.listApartments() });
+export const listApartmentsHandler: ExpressHandlerRequest<listApartmentsRequest, listApartmentsResponse> = async (req, res) => {
+    res.send({ apartments: await db.listApartments() });
 }
 
 
-export const getApartmentHandler: RequestHandler = (req, res) => {
-    const id = req.params.id;
-    const apartment = db.getApartmentById(id);
-    if (apartment) {
-        res.send(apartment);
-    } else {
-        res.status(404).send({ message: 'Apartment not found' });
-    }
-}
+// export const getApartmentHandler: ExpressHandlerRequest<GetApartmentRequest, GetApartmentResponse> = (req, res) => {
+//     const id = req.params.id;
+//     const apartment = db.getApartmentById(id);
+//     if (apartment) {
+//         res.send(apartment);
+//     } else {
+//         res.status(404).send({ message: 'Apartment not found' });
+//     }
+// }
 
-export const createApartmentHandler: ExpressHandlerRequest<ApartmentCreateRequest, ApartmentCreateResponse> = (req, res) => {
-    
+export const createApartmentHandler: ExpressHandlerRequest<CreateApartmentRequest, CreateApartmentResponse> = async (req, res) => {
+    // validation checks
+
     if (!req.body.title || !req.body.description || !req.body.price || !req.body.location || !req.body.image || !req.body.userId) {
         res.status(400).send({ message: 'Missing required information' });
         return;
@@ -34,13 +36,13 @@ export const createApartmentHandler: ExpressHandlerRequest<ApartmentCreateReques
         createdAt: Date.now(),
         userId: req.body.userId
     };
-    db.createApartment(apartment);
+    await db.createApartment(apartment);
     res.send(apartment);
 }
 
-export const updateApartmentHandler: RequestHandler = (req, res) => {
+export const updateApartmentHandler: RequestHandler = async (req, res) => {
     const apartment = req.body;
-    db.updateApartment(apartment);
+    await db.updateApartment(apartment);
     res.send(apartment);
 }
 
