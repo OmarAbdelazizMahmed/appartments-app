@@ -2,6 +2,7 @@ import express, { ErrorRequestHandler, RequestHandler } from 'express';
 import { createApartmentHandler, listApartmentsHandler } from './handlers/apartmentHandler';
 import expressAsyncHandler from 'express-async-handler';
 import { initDb } from './datastore';
+import { loginHandler, registerHandler } from './handlers/userHandler';
 
 (async () => {
 
@@ -27,9 +28,8 @@ import { initDb } from './datastore';
     // add a new apartment
     app.post('/apartments',  expressAsyncHandler(createApartmentHandler));
 
-    app.post('/login', (req, res) => {
-        res.send('User logged in');
-    });
+    app.post('/register',  expressAsyncHandler(registerHandler));
+    app.post('/login',  expressAsyncHandler(loginHandler));
 
     const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
         console.error(err);
