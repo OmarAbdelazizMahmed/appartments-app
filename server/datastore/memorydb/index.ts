@@ -12,6 +12,12 @@ export class InMemoryDataStore implements DataStore{
         let user = this.users.find((user) => user.email === email);
         return Promise.resolve(user || null);
     }
+
+    getUserById(id: string): Promise<User | null> {
+        let user = this.users.find((user) => user.id === id);
+        return Promise.resolve(user || null);
+    }
+
     listApartments(): Promise<Apartment[]> {
         return Promise.resolve(this.apartments);
     }

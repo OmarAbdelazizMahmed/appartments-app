@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 
-export type ExpressHandlerRequest<Req, Res> = RequestHandler<string, Partial<Res>, Partial<Req>, any>;
+export type ExpressHandlerRequest<Req, Res> = RequestHandler<string, Partial<WithError<Res>>, Partial<Req>, any>;
 
 export interface User {
     id: string;
@@ -21,26 +21,8 @@ export interface Apartment {
     createdAt: number;
 }
 
-export interface UserLogin {
-    email: string;
-    password: string;
+export interface JwtObject {
+    userId: string;
 }
 
-export interface UserRegister {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-}
-
-
-
-export interface ApartmentUpdate {
-    id: string;
-    title: string;
-    description: string;
-    price: number;
-    location: string;
-    image: string;
-}
-
+export type WithError<T> = T & { error?: string };

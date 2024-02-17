@@ -18,7 +18,10 @@ export type GetApartmentResponse = {
 
 export type RegisterUserRequest = Pick<User, 'firstName' | 'lastName' | 'email' | 'password'>;
 
-export interface RegisterUserResponse {}
+export interface RegisterUserResponse {
+    jwt?: string;
+    message?: string;
+}
 
 export interface LoginUserRequest {
     email: string;
@@ -27,5 +30,6 @@ export interface LoginUserRequest {
 
 export type LoginUserResponse = {
     user?: Pick<User, 'id' | 'firstName' | 'lastName' | 'email'>;
+    jwt?: string;
     message?: string;
 }

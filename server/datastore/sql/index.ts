@@ -25,6 +25,11 @@ export class SqlDataStore implements DataStore {
     getUserByEmail(email: string): Promise<User | null | undefined> {
         return this.db.get<User | null>("SELECT * FROM users WHERE email = ?", email);
     }
+
+    getUserById(id: string): Promise<User | null | undefined> {
+        return this.db.get<User | null>("SELECT * FROM users WHERE id = ?", id);
+    }
+
     listApartments(): Promise<Apartment[]> {
         return this.db.all<Apartment[]>("SELECT * FROM apartments");
     }

@@ -9,21 +9,21 @@ export const listApartmentsHandler: ExpressHandlerRequest<listApartmentsRequest,
 }
 
 
-// export const getApartmentHandler: ExpressHandlerRequest<GetApartmentRequest, GetApartmentResponse> = (req, res) => {
-//     const id = req.params.id;
-//     const apartment = db.getApartmentById(id);
-//     if (apartment) {
-//         res.send(apartment);
-//     } else {
-//         res.status(404).send({ message: 'Apartment not found' });
-//     }
-// }
+export const getApartmentHandler:RequestHandler = async (req, res) => {
+    const id = req.params.id;
+    const apartment = await db.getApartmentById(id);
+    if (apartment) {
+        res.send(apartment);
+    } else {
+        res.status(404).send({ message: 'Apartment not found' });
+    }
+}
 
 export const createApartmentHandler: ExpressHandlerRequest<CreateApartmentRequest, CreateApartmentResponse> = async (req, res) => {
     // validation checks
 
     if (!req.body.title || !req.body.description || !req.body.price || !req.body.location || !req.body.image || !req.body.userId) {
-        res.status(400).send({ message: 'Missing required information' });
+        res.status(400).send({ error: 'Missing required information' });
         return;
     }
     const apartment: Apartment = {
@@ -34,10 +34,10 @@ export const createApartmentHandler: ExpressHandlerRequest<CreateApartmentReques
         location: req.body.location,
         image: req.body.image,
         createdAt: Date.now(),
-        userId: req.body.userId
+        userId: res.locals.user.id
     };
     await db.createApartment(apartment);
-    res.send(apartment);
+    res.sendStatus(201);
 }
 
 export const updateApartmentHandler: RequestHandler = async (req, res) => {
