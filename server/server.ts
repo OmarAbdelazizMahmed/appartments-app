@@ -7,6 +7,9 @@ import { requestLoggerMiddleware } from './middleware/errorMiddleware';
 import { errorHandler } from './middleware/loggerMiddleware';
 import dotenv from 'dotenv';
 import { authMiddleware } from './middleware/authMiddleware';
+import { WithError } from '../shared/src/types';
+
+export type ExpressHandlerRequest<Req, Res> = RequestHandler<string, Partial<WithError<Res>>, Partial<Req>, any>;
 
 (async () => {
     dotenv.config();

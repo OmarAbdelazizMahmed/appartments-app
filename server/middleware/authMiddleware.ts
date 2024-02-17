@@ -1,6 +1,6 @@
 import { verifyJwt } from "../auth";
 import { db } from "../datastore";
-import { ExpressHandlerRequest } from "../types";
+import { ExpressHandlerRequest } from "../server";
 
 export const authMiddleware: ExpressHandlerRequest<any, any> = async (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];

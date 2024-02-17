@@ -1,4 +1,4 @@
-import { Apartment } from "../../types";
+import { Apartment } from "../../../shared/src/types";
 
 export interface ApartmentDao {
     listApartments(): Promise<Apartment[]>;

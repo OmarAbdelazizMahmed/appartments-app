@@ -9,3 +9,48 @@ npm-debug.log*
 # Dependency directories
 .pnp/
 node_modules/
+
+# mobile 
+# Node.js
+moble/node_modules/
+moble/npm-debug.log
+
+# Android
+moble/android/app/build/
+moble/android/app/src/main/assets/cache/
+moble/android/app/src/main/res/drawable-*.cache/
+moble/android/build/
+moble/android/gradlew.bat
+moble/android/gradlew
+moble/android/local.properties
+moble/android/lint.xml
+moble/android/settings.gradle
+moble/android/signing.gradle
+moble/gradle/wrapper/gradle-wrapper.jar
+moble/bundleRelease/*.map
+moble/*.apk
+moble/!android/app/src/main/assets/images/* # Keep specific images if needed
+moble/!android/app/src/main/res/drawable/* # Keep specific drawables if needed
+
+# iOS
+moble/ios/Pods/
+moble/ios/build/
+moble/ios/DerivedData/
+moble/ios/*.xcarchive
+moble/ios/*.xcworkspacedata
+moble/ios/*.xcuserstate
+moble/Podfile.lock
+
+# Other common ignore patterns
+moble/.idea/
+moble/coverage/
+moble/*.log
+moble/*.tmp
+moble/*.env
+moble/yarn.lock
+moble/package-lock.json
+moble/jest/
+
+# Optional:
+# !yarn.lock # Keep if you prefer to commit yarn.lock
+# !package-lock.json # Keep if you prefer to commit package-lock.json

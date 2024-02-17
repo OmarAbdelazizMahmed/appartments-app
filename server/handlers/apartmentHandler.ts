@@ -1,8 +1,9 @@
 import { RequestHandler } from "express";
 import { db } from "../datastore";
-import { Apartment, ExpressHandlerRequest } from "../types";
+import { Apartment } from "../../shared/src/types";
 import crypto from 'crypto';
-import { CreateApartmentRequest, CreateApartmentResponse, GetApartmentRequest, GetApartmentResponse, listApartmentsRequest, listApartmentsResponse } from "../api";
+import { CreateApartmentRequest, CreateApartmentResponse, GetApartmentRequest, GetApartmentResponse, listApartmentsRequest, listApartmentsResponse } from "../../shared/src/api";
+import { ExpressHandlerRequest } from "../server";
 
 export const listApartmentsHandler: ExpressHandlerRequest<listApartmentsRequest, listApartmentsResponse> = async (req, res) => {
     res.send({ apartments: await db.listApartments() });

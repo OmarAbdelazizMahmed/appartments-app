@@ -1,5 +1,5 @@
 import { DataStore } from "..";
-import { User, Apartment } from "../../types";
+import { User, Apartment } from "../../../shared/src/types";
 
 export class InMemoryDataStore implements DataStore{
     private users: User[] = [];

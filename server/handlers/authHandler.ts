@@ -1,8 +1,9 @@
-import { LoginUserRequest, LoginUserResponse, RegisterUserRequest, RegisterUserResponse } from "../api";
+import { LoginUserRequest, LoginUserResponse, RegisterUserRequest, RegisterUserResponse } from "../../shared/src/api";
 import { signJwt } from "../auth";
 import { db } from "../datastore";
-import { ExpressHandlerRequest, User } from "../types";
 import crypto from 'crypto';
+import { ExpressHandlerRequest } from "../server";
+import { User } from "../../shared/src/types";
 
 export const registerHandler: ExpressHandlerRequest<RegisterUserRequest, RegisterUserResponse> = async (req, res) => {
     const { firstName, lastName, email, password } = req.body;

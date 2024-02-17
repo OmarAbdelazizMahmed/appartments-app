@@ -1,6 +1,3 @@
-import { RequestHandler } from "express";
-
-export type ExpressHandlerRequest<Req, Res> = RequestHandler<string, Partial<WithError<Res>>, Partial<Req>, any>;
 
 export interface User {
     id: string;

@@ -1,5 +1,5 @@
 import { DataStore } from "..";
-import { User, Apartment } from "../../types";
+import { User, Apartment } from "../../../shared/src/types";
 import sqlite3 from "sqlite3";
 import { Database, open as sqliteOpen } from "sqlite";
 import path from "path";
